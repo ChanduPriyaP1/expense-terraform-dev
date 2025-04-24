@@ -26,10 +26,10 @@ pipeline {
         }
         stage('init') {
 
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
+            // input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            // }
             when {
                      expression 
                      { 
@@ -47,10 +47,10 @@ pipeline {
         }
         stage('plan') {
 
-             input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
+            //  input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            // }
             when {
                      expression 
                      { 
