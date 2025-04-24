@@ -30,15 +30,17 @@ pipeline {
                 message "Should we continue?"
                 ok "Yes, we should."
             }
-            steps {
-                echo 'initializing the terraform.......'
-                when {
+            when {
                      expression 
                      { 
-                        return params.Action
+                         params.Action == 'terraform init'
                      } 
                     }
+            steps {
+                echo 'initializing the terraform.......'
+                
                 sh """
+                    cd 01-vpc
                     terraform init -reconfigure
                 """
             }
@@ -49,15 +51,17 @@ pipeline {
                 message "Should we continue?"
                 ok "Yes, we should."
             }
-            steps {
-                echo 'planning the terraform.........'
-                    when {
+            when {
                      expression 
                      { 
-                        return params.Action
+                        params.Action == 'terraform plan'
                      } 
                     }
+            steps {
+                echo 'planning the terraform.........'
+                    
                 sh """
+                   cd 01-vpc
                     terraform plan
 
                 """
