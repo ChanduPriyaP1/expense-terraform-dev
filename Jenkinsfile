@@ -10,15 +10,16 @@ pipeline {
 
     parameters {
         
-        choice(name: 'Action', choices: ['list', 'terraform init', 'terraform plan'], description: 'Pick something')
+        choice(name: 'Action', choices: ['list', 'init', 'plan'], description: 'Pick something')
 
     }
 
     stages {
-        stage('Build') {
+        stage('list') {
             steps {
                 echo 'Building..'
                 sh """
+                   cd 01-vpc
                     ls -ltr
 
                 """
@@ -26,14 +27,10 @@ pipeline {
         }
         stage('init') {
 
-            // input {
-            //     message "Should we continue?"
-            //     ok "Yes, we should."
-            // }
             when {
                      expression 
                      { 
-                         params.Action == 'terraform init'
+                         params.Action == 'init'
                      } 
                     }
             steps {
@@ -47,14 +44,10 @@ pipeline {
         }
         stage('plan') {
 
-            //  input {
-            //     message "Should we continue?"
-            //     ok "Yes, we should."
-            // }
             when {
                      expression 
                      { 
-                        params.Action == 'terraform plan'
+                        params.Action == 'plan'
                      } 
                     }
             steps {
@@ -62,7 +55,7 @@ pipeline {
                     
                 sh """
                    cd 01-vpc
-                    terraform plan
+                    terraform apply --auto -approve
 
                 """
             }
